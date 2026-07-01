@@ -1,3 +1,0 @@
-# Netlify SPA fallback — ensures all client-side routes resolve to index.html
-# The /api/* proxy rule in netlify.toml takes priority over this.
-/*  /index.html  200
