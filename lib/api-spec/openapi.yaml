@@ -1,0 +1,1058 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 0.1.0
+  description: Data Career Intelligence Platform API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: dashboard
+    description: Career dashboard operations
+  - name: skills
+    description: Skill demand analytics
+  - name: salary
+    description: Salary intelligence
+  - name: resume
+    description: Resume analyzer
+  - name: coach
+    description: AI Career Coach
+  - name: roadmap
+    description: Learning roadmap generator
+  - name: jobs
+    description: Job market insights
+  - name: portfolio
+    description: Portfolio tracker
+
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [dashboard]
+      summary: Get career dashboard summary stats
+      responses:
+        "200":
+          description: Dashboard summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+
+  /dashboard/activity:
+    get:
+      operationId: getDashboardActivity
+      tags: [dashboard]
+      summary: Get recent career activity feed
+      responses:
+        "200":
+          description: Activity list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ActivityItem"
+
+  /dashboard/career-score:
+    get:
+      operationId: getCareerScore
+      tags: [dashboard]
+      summary: Get overall career readiness score
+      responses:
+        "200":
+          description: Career score details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CareerScore"
+
+  /skills/demand:
+    get:
+      operationId: getSkillDemand
+      tags: [skills]
+      summary: Get skill demand analytics
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: timeframe
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Skill demand data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SkillDemand"
+
+  /skills/trending:
+    get:
+      operationId: getTrendingSkills
+      tags: [skills]
+      summary: Get top trending skills right now
+      responses:
+        "200":
+          description: Trending skills
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TrendingSkill"
+
+  /skills/gap-analysis:
+    post:
+      operationId: analyzeSkillGap
+      tags: [skills]
+      summary: Analyze skill gaps for a target role
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SkillGapInput"
+      responses:
+        "200":
+          description: Skill gap analysis results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SkillGapResult"
+
+  /salary/by-role:
+    get:
+      operationId: getSalaryByRole
+      tags: [salary]
+      summary: Get salary data by role
+      parameters:
+        - name: role
+          in: query
+          schema:
+            type: string
+        - name: location
+          in: query
+          schema:
+            type: string
+        - name: experience
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Salary data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SalaryData"
+
+  /salary/trends:
+    get:
+      operationId: getSalaryTrends
+      tags: [salary]
+      summary: Get salary trend over time
+      responses:
+        "200":
+          description: Salary trend data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SalaryTrend"
+
+  /salary/comparison:
+    get:
+      operationId: getSalaryComparison
+      tags: [salary]
+      summary: Compare salaries across roles and locations
+      responses:
+        "200":
+          description: Salary comparison
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SalaryComparison"
+
+  /resume/analyze:
+    post:
+      operationId: analyzeResume
+      tags: [resume]
+      summary: Analyze a resume and return ATS score + recommendations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResumeInput"
+      responses:
+        "200":
+          description: Resume analysis result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResumeAnalysis"
+
+  /resume/saved:
+    get:
+      operationId: getSavedResumes
+      tags: [resume]
+      summary: Get saved resume analyses
+      responses:
+        "200":
+          description: Saved resume analyses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SavedResume"
+
+  /coach/messages:
+    get:
+      operationId: getCoachMessages
+      tags: [coach]
+      summary: Get AI career coach conversation history
+      responses:
+        "200":
+          description: Coach messages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CoachMessage"
+
+  /coach/chat:
+    post:
+      operationId: sendCoachMessage
+      tags: [coach]
+      summary: Send a message to the AI career coach
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CoachMessageInput"
+      responses:
+        "200":
+          description: Coach response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CoachMessage"
+
+  /roadmap/generate:
+    post:
+      operationId: generateRoadmap
+      tags: [roadmap]
+      summary: Generate a personalized learning roadmap
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RoadmapInput"
+      responses:
+        "200":
+          description: Generated roadmap
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LearningRoadmap"
+
+  /roadmap/saved:
+    get:
+      operationId: getSavedRoadmaps
+      tags: [roadmap]
+      summary: Get saved learning roadmaps
+      responses:
+        "200":
+          description: Saved roadmaps
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LearningRoadmap"
+
+  /jobs/listings:
+    get:
+      operationId: getJobListings
+      tags: [jobs]
+      summary: Get job market listings
+      parameters:
+        - name: role
+          in: query
+          schema:
+            type: string
+        - name: location
+          in: query
+          schema:
+            type: string
+        - name: remote
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: Job listings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/JobListing"
+
+  /jobs/top-companies:
+    get:
+      operationId: getTopHiringCompanies
+      tags: [jobs]
+      summary: Get top hiring companies for data roles
+      responses:
+        "200":
+          description: Top hiring companies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/HiringCompany"
+
+  /jobs/market-overview:
+    get:
+      operationId: getJobMarketOverview
+      tags: [jobs]
+      summary: Get overall job market statistics and insights
+      responses:
+        "200":
+          description: Job market overview
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobMarketOverview"
+
+  /jobs/predictions:
+    get:
+      operationId: getJobPredictions
+      tags: [jobs]
+      summary: Get AI-powered future job market predictions
+      responses:
+        "200":
+          description: Job market predictions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MarketPrediction"
+
+  /portfolio/projects:
+    get:
+      operationId: getPortfolioProjects
+      tags: [portfolio]
+      summary: Get portfolio projects
+      responses:
+        "200":
+          description: Portfolio projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PortfolioProject"
+
+  /portfolio/projects/{id}:
+    get:
+      operationId: getPortfolioProject
+      tags: [portfolio]
+      summary: Get a specific portfolio project
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Portfolio project
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortfolioProject"
+
+  /portfolio/projects/add:
+    post:
+      operationId: addPortfolioProject
+      tags: [portfolio]
+      summary: Add a new portfolio project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PortfolioProjectInput"
+      responses:
+        "201":
+          description: Created portfolio project
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortfolioProject"
+
+  /portfolio/score:
+    get:
+      operationId: getPortfolioScore
+      tags: [portfolio]
+      summary: Get overall portfolio readiness score and insights
+      responses:
+        "200":
+          description: Portfolio score
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortfolioScore"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required: [status]
+
+    DashboardSummary:
+      type: object
+      properties:
+        careerScore:
+          type: integer
+        jobsApplied:
+          type: integer
+        skillsTracked:
+          type: integer
+        salaryBenchmark:
+          type: integer
+        marketDemand:
+          type: string
+        weeklyGrowth:
+          type: number
+        topRole:
+          type: string
+        learningProgress:
+          type: integer
+      required: [careerScore, jobsApplied, skillsTracked, salaryBenchmark, marketDemand, weeklyGrowth, topRole, learningProgress]
+
+    ActivityItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        timestamp:
+          type: string
+        icon:
+          type: string
+      required: [id, type, title, description, timestamp, icon]
+
+    CareerScore:
+      type: object
+      properties:
+        overall:
+          type: integer
+        skills:
+          type: integer
+        experience:
+          type: integer
+        portfolio:
+          type: integer
+        marketFit:
+          type: integer
+        learning:
+          type: integer
+        recommendations:
+          type: array
+          items:
+            type: string
+      required: [overall, skills, experience, portfolio, marketFit, learning, recommendations]
+
+    SkillDemand:
+      type: object
+      properties:
+        skill:
+          type: string
+        category:
+          type: string
+        demandScore:
+          type: integer
+        jobCount:
+          type: integer
+        growthRate:
+          type: number
+        avgSalaryImpact:
+          type: integer
+        trend:
+          type: string
+      required: [skill, category, demandScore, jobCount, growthRate, avgSalaryImpact, trend]
+
+    TrendingSkill:
+      type: object
+      properties:
+        skill:
+          type: string
+        momentum:
+          type: number
+        weeklyGrowth:
+          type: number
+        hotness:
+          type: string
+      required: [skill, momentum, weeklyGrowth, hotness]
+
+    SkillGapInput:
+      type: object
+      properties:
+        currentSkills:
+          type: array
+          items:
+            type: string
+        targetRole:
+          type: string
+        experienceLevel:
+          type: string
+      required: [currentSkills, targetRole, experienceLevel]
+
+    SkillGapResult:
+      type: object
+      properties:
+        targetRole:
+          type: string
+        matchScore:
+          type: integer
+        missingSkills:
+          type: array
+          items:
+            $ref: "#/components/schemas/SkillGapItem"
+        strongSkills:
+          type: array
+          items:
+            type: string
+        estimatedTimeline:
+          type: string
+        recommendations:
+          type: array
+          items:
+            type: string
+      required: [targetRole, matchScore, missingSkills, strongSkills, estimatedTimeline, recommendations]
+
+    SkillGapItem:
+      type: object
+      properties:
+        skill:
+          type: string
+        importance:
+          type: string
+        timeToLearn:
+          type: string
+      required: [skill, importance, timeToLearn]
+
+    SalaryData:
+      type: object
+      properties:
+        role:
+          type: string
+        location:
+          type: string
+        experience:
+          type: string
+        minSalary:
+          type: integer
+        maxSalary:
+          type: integer
+        avgSalary:
+          type: integer
+        currency:
+          type: string
+        industry:
+          type: string
+      required: [role, location, experience, minSalary, maxSalary, avgSalary, currency, industry]
+
+    SalaryTrend:
+      type: object
+      properties:
+        year:
+          type: integer
+        role:
+          type: string
+        avgSalary:
+          type: integer
+        growth:
+          type: number
+      required: [year, role, avgSalary, growth]
+
+    SalaryComparison:
+      type: object
+      properties:
+        roles:
+          type: array
+          items:
+            $ref: "#/components/schemas/RoleSalary"
+        locations:
+          type: array
+          items:
+            $ref: "#/components/schemas/LocationSalary"
+        industries:
+          type: array
+          items:
+            $ref: "#/components/schemas/IndustrySalary"
+      required: [roles, locations, industries]
+
+    RoleSalary:
+      type: object
+      properties:
+        role:
+          type: string
+        avgSalary:
+          type: integer
+        demand:
+          type: string
+      required: [role, avgSalary, demand]
+
+    LocationSalary:
+      type: object
+      properties:
+        location:
+          type: string
+        avgSalary:
+          type: integer
+        costOfLivingIndex:
+          type: number
+      required: [location, avgSalary, costOfLivingIndex]
+
+    IndustrySalary:
+      type: object
+      properties:
+        industry:
+          type: string
+        avgSalary:
+          type: integer
+        growth:
+          type: number
+      required: [industry, avgSalary, growth]
+
+    ResumeInput:
+      type: object
+      properties:
+        resumeText:
+          type: string
+        targetRole:
+          type: string
+        targetIndustry:
+          type: string
+      required: [resumeText, targetRole]
+
+    ResumeAnalysis:
+      type: object
+      properties:
+        id:
+          type: integer
+        atsScore:
+          type: integer
+        overallScore:
+          type: integer
+        targetRole:
+          type: string
+        analyzedAt:
+          type: string
+        strengths:
+          type: array
+          items:
+            type: string
+        weaknesses:
+          type: array
+          items:
+            type: string
+        missingKeywords:
+          type: array
+          items:
+            type: string
+        suggestedKeywords:
+          type: array
+          items:
+            type: string
+        improvements:
+          type: array
+          items:
+            $ref: "#/components/schemas/ResumeImprovement"
+        skillsDetected:
+          type: array
+          items:
+            type: string
+        formatScore:
+          type: integer
+        contentScore:
+          type: integer
+        keywordScore:
+          type: integer
+      required: [id, atsScore, overallScore, targetRole, analyzedAt, strengths, weaknesses, missingKeywords, suggestedKeywords, improvements, skillsDetected, formatScore, contentScore, keywordScore]
+
+    ResumeImprovement:
+      type: object
+      properties:
+        section:
+          type: string
+        priority:
+          type: string
+        suggestion:
+          type: string
+      required: [section, priority, suggestion]
+
+    SavedResume:
+      type: object
+      properties:
+        id:
+          type: integer
+        targetRole:
+          type: string
+        atsScore:
+          type: integer
+        analyzedAt:
+          type: string
+      required: [id, targetRole, atsScore, analyzedAt]
+
+    CoachMessage:
+      type: object
+      properties:
+        id:
+          type: integer
+        role:
+          type: string
+        content:
+          type: string
+        timestamp:
+          type: string
+        suggestions:
+          type: array
+          items:
+            type: string
+      required: [id, role, content, timestamp]
+
+    CoachMessageInput:
+      type: object
+      properties:
+        message:
+          type: string
+        context:
+          type: string
+      required: [message]
+
+    RoadmapInput:
+      type: object
+      properties:
+        currentRole:
+          type: string
+        targetRole:
+          type: string
+        currentSkills:
+          type: array
+          items:
+            type: string
+        timeframe:
+          type: string
+        learningStyle:
+          type: string
+      required: [currentRole, targetRole, timeframe]
+
+    LearningRoadmap:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        targetRole:
+          type: string
+        timeframe:
+          type: string
+        completionPercentage:
+          type: integer
+        createdAt:
+          type: string
+        phases:
+          type: array
+          items:
+            $ref: "#/components/schemas/RoadmapPhase"
+        resources:
+          type: array
+          items:
+            $ref: "#/components/schemas/LearningResource"
+      required: [id, title, targetRole, timeframe, completionPercentage, createdAt, phases, resources]
+
+    RoadmapPhase:
+      type: object
+      properties:
+        phase:
+          type: integer
+        title:
+          type: string
+        duration:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+        milestone:
+          type: string
+        completed:
+          type: boolean
+      required: [phase, title, duration, skills, milestone, completed]
+
+    LearningResource:
+      type: object
+      properties:
+        title:
+          type: string
+        type:
+          type: string
+        platform:
+          type: string
+        duration:
+          type: string
+        difficulty:
+          type: string
+        url:
+          type: string
+      required: [title, type, platform, duration, difficulty]
+
+    JobListing:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        company:
+          type: string
+        location:
+          type: string
+        remote:
+          type: boolean
+        salaryMin:
+          type: integer
+        salaryMax:
+          type: integer
+        skills:
+          type: array
+          items:
+            type: string
+        postedAt:
+          type: string
+        matchScore:
+          type: integer
+        industry:
+          type: string
+        experienceLevel:
+          type: string
+      required: [id, title, company, location, remote, salaryMin, salaryMax, skills, postedAt, matchScore, industry, experienceLevel]
+
+    HiringCompany:
+      type: object
+      properties:
+        name:
+          type: string
+        industry:
+          type: string
+        openRoles:
+          type: integer
+        avgSalary:
+          type: integer
+        rating:
+          type: number
+        remote:
+          type: boolean
+        topSkills:
+          type: array
+          items:
+            type: string
+      required: [name, industry, openRoles, avgSalary, rating, remote, topSkills]
+
+    JobMarketOverview:
+      type: object
+      properties:
+        totalOpenings:
+          type: integer
+        remotePercentage:
+          type: number
+        avgTimeToHire:
+          type: integer
+        demandGrowth:
+          type: number
+        topLocations:
+          type: array
+          items:
+            $ref: "#/components/schemas/LocationDemand"
+        roleBreakdown:
+          type: array
+          items:
+            $ref: "#/components/schemas/RoleDemand"
+        industryDemand:
+          type: array
+          items:
+            $ref: "#/components/schemas/IndustryDemand"
+      required: [totalOpenings, remotePercentage, avgTimeToHire, demandGrowth, topLocations, roleBreakdown, industryDemand]
+
+    LocationDemand:
+      type: object
+      properties:
+        location:
+          type: string
+        openings:
+          type: integer
+        growth:
+          type: number
+      required: [location, openings, growth]
+
+    RoleDemand:
+      type: object
+      properties:
+        role:
+          type: string
+        openings:
+          type: integer
+        percentage:
+          type: number
+      required: [role, openings, percentage]
+
+    IndustryDemand:
+      type: object
+      properties:
+        industry:
+          type: string
+        openings:
+          type: integer
+        growth:
+          type: number
+      required: [industry, openings, growth]
+
+    MarketPrediction:
+      type: object
+      properties:
+        skill:
+          type: string
+        currentDemand:
+          type: integer
+        predictedDemand:
+          type: integer
+        growthRate:
+          type: number
+        timeframe:
+          type: string
+        confidence:
+          type: number
+        insight:
+          type: string
+      required: [skill, currentDemand, predictedDemand, growthRate, timeframe, confidence, insight]
+
+    PortfolioProject:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+        category:
+          type: string
+        score:
+          type: integer
+        recruiterReadiness:
+          type: string
+        githubUrl:
+          type: ["string", "null"]
+        liveUrl:
+          type: ["string", "null"]
+        complexity:
+          type: string
+        impact:
+          type: string
+        createdAt:
+          type: string
+      required: [id, title, description, skills, category, score, recruiterReadiness, complexity, impact, createdAt]
+
+    PortfolioProjectInput:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+        category:
+          type: string
+        githubUrl:
+          type: string
+        liveUrl:
+          type: string
+        complexity:
+          type: string
+      required: [title, description, skills, category]
+
+    PortfolioScore:
+      type: object
+      properties:
+        overall:
+          type: integer
+        diversity:
+          type: integer
+        complexity:
+          type: integer
+        presentation:
+          type: integer
+        recruiterReadiness:
+          type: integer
+        totalProjects:
+          type: integer
+        strengths:
+          type: array
+          items:
+            type: string
+        improvements:
+          type: array
+          items:
+            type: string
+        topProject:
+          type: string
+      required: [overall, diversity, complexity, presentation, recruiterReadiness, totalProjects, strengths, improvements, topProject]

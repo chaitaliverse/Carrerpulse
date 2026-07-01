@@ -1,0 +1,29 @@
+# ============================================================
+# CareerPulse — Netlify deployment config (frontend only)
+# The API server must be deployed separately (Railway / Render /
+# Fly.io) and its URL set as API_SERVER_URL in Netlify's
+# "Environment variables" dashboard before deploying.
+# ============================================================
+
+[build]
+  command = "pnpm install --frozen-lockfile && pnpm --filter @workspace/data-career-platform run build"
+  publish  = "artifacts/data-career-platform/dist/public"
+
+[build.environment]
+  BASE_PATH    = "/"
+  NODE_VERSION = "24"
+
+# ── Proxy: /api/* → your deployed API server ──────────────────
+# Replace the `to` URL with your real API server after deploying it.
+# Set API_SERVER_URL in Netlify → Site settings → Environment variables.
+[[redirects]]
+  from   = "/api/*"
+  to     = "https://placeholder-replace-with-api-url.example.com/api/:splat"
+  status = 200
+  force  = true
+
+# ── SPA fallback: all other routes → index.html ───────────────
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200

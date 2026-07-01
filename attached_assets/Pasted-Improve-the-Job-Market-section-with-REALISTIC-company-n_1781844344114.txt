@@ -1,0 +1,82 @@
+Improve the Job Market section with REALISTIC company names, accurate locations, and role-based salaries.
+
+Requirements:
+
+1. Replace generic/random companies with well-known companies from India and worldwide.
+
+2. Show realistic company locations:
+   - India: Bengaluru, Hyderabad, Pune, Mumbai, Chennai, Gurugram, Noida
+   - Global: San Francisco, Seattle, New York, London, Singapore, Berlin, Toronto, Sydney
+
+3. Example job cards:
+
+Senior Data Analyst
+Company: Google
+Location: Bengaluru, India
+Salary: ₹18L – ₹32L
+Skills: SQL, Python, Tableau, Statistics
+
+Business Intelligence Analyst
+Company: Amazon
+Location: Hyderabad, India
+Salary: ₹12L – ₹24L
+Skills: SQL, Power BI, Excel, Data Modeling
+
+Data Analyst
+Company: Flipkart
+Location: Bengaluru, India
+Salary: ₹8L – ₹18L
+Skills: SQL, Excel, Power BI, Python
+
+Analytics Consultant
+Company: Deloitte
+Location: Mumbai, India
+Salary: ₹9L – ₹22L
+Skills: SQL, Power BI, Excel, Analytics
+
+Data Scientist
+Company: Microsoft
+Location: Hyderabad, India
+Salary: ₹20L – ₹45L
+Skills: Python, Machine Learning, Statistics, Azure
+
+Senior Data Analyst
+Company: Stripe
+Location: San Francisco, CA, USA
+Salary: $140K – $220K
+Skills: SQL, Python, Tableau
+
+Analytics Engineer
+Company: Databricks
+Location: San Francisco, CA, USA
+Salary: $160K – $280K
+Skills: dbt, SQL, Python, Spark
+
+Data Scientist – ML
+Company: OpenAI
+Location: San Francisco, CA, USA
+Salary: $220K – $450K
+Skills: Python, PyTorch, LLMs
+
+4. Add company logos/icons where possible.
+
+5. Add country flags beside locations.
+
+6. Display salary in local currency:
+   - India → ₹
+   - USA → $
+   - UK → £
+   - Singapore → S$
+   - Europe → €
+
+7. Make locations, salaries, and company names look professional and realistic.
+
+8. Add a filter:
+   - India Jobs
+   - Global Jobs
+   - Remote Jobs
+
+9. Use at least 30 different companies including:
+Google, Microsoft, Amazon, Deloitte, Accenture, TCS, Infosys, Wipro, Cognizant, Capgemini, Flipkart, PhonePe, Swiggy, Zomato, Razorpay, Meesho, OpenAI, Stripe, Databricks, Uber, Airbnb, Netflix, Meta, Apple, LinkedIn, PayPal, Adobe, Salesforce, NVIDIA, IBM.
+
+10. The UI should look like a premium AI-powered career intelligence platform used by professionals.
